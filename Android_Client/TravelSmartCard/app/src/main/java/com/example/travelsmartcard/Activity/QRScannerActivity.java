@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.travelsmartcard.R;
 import com.google.zxing.BarcodeFormat;
@@ -58,6 +59,8 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
     @Override
     protected void onPause() {
         super.onPause();
+        zxingScannerView.stopCamera();
+        finish();
     }
 
     private void setScannerProperties(ZXingScannerView zxingScannerView) {
@@ -75,7 +78,9 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
         Log.v(TAG, result.getText()); // Prints scan results
         Log.v(TAG, result.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
 
+        Toast.makeText(this,result.getText().toString(),Toast.LENGTH_LONG).show();
+
         // If you would like to resume scanning, call this method below:
-        zxingScannerView.resumeCameraPreview(this);
+//        zxingScannerView.resumeCameraPreview(this);
     }
 }
