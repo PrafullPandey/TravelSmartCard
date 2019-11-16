@@ -55,22 +55,21 @@ public class QRGeneratorActivity extends AppCompatActivity {
         });
         final String UserId = "10" ;
 
-                myRef.child(UserId).child("Active").addValueEventListener(new ValueEventListener() {
+                myRef.child(UserId).child("OpenGate").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String source = "";
                         String destination = "";
-                        String active = "";
+                        String opengate = "";
 
                         if (dataSnapshot.exists()) {
-                            for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
                                 try {
-                                    String Key = (String) messageSnapshot.getKey();
-                                    String Value = (String) messageSnapshot.getValue();
-                                    Log.d(TAG, "onDataChange: " + messageSnapshot);
+                                    String Key = (String) dataSnapshot.getKey();
+                                    String Value = (String) dataSnapshot.getValue();
+                                    Log.d(TAG, "onDataChange: " + dataSnapshot);
 
-                                    if (Key.equalsIgnoreCase("Active")) {
-                                        active = Value;
+                                    if (Key.equalsIgnoreCase("OpenGate")) {
+                                        opengate = Value;
                                     } else if (Key.equalsIgnoreCase("Source")) {
                                         source = Value;
                                     } else if (Key.equalsIgnoreCase("Destination")) {
@@ -80,13 +79,12 @@ public class QRGeneratorActivity extends AppCompatActivity {
                                     Log.e(TAG, "onDataChange: " + e.getStackTrace());
                                 }
                             }
-                        }
-                        if (active.equalsIgnoreCase("True")) {
+
+                        if (opengate.equalsIgnoreCase("True" )) {
                             //SourceScanDone
                             //check minm balance logic
-                            myRef.child(UserId).child("OpenGate").setValue("False");
                             Toast.makeText(QRGeneratorActivity.this, "Source Gates Opened ", Toast.LENGTH_LONG).show();
-                        } else if (active.equalsIgnoreCase("False")) {
+                        } else if (opengate.equalsIgnoreCase("False")) {
                             //DestinationScan
                             //deduct balance
                             Toast.makeText(QRGeneratorActivity.this, " Exit Gates Opened", Toast.LENGTH_LONG).show();

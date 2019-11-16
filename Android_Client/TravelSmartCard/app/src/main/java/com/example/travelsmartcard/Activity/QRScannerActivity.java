@@ -31,6 +31,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class QRScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView zxingScannerView ;
     public static final int MY_CAMERA_REQUEST_CODE = 10 ;
+    private String  flag = "";
     private static final String TAG = "QRScannerActivity";
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -98,47 +99,61 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
 
     private void sendDataToFireBase(String text) {
         final String UserId = "10" ;
+
+        myRef.child(UserId).child("Flag").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                flag = (String)dataSnapshot.getValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         myRef.child(UserId).child("Active").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.exists()) {
-
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef2 = database.getReference("UserActive");
-
-
-
-                    for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
                         try {
-                            String Key = (String) messageSnapshot.getKey();
-                            String Value = (String) messageSnapshot.getValue();
+                            String Key = (String) dataSnapshot.getKey();
+                            String Value = (String) dataSnapshot.getValue();
 
+                            Log.d(TAG, "onDataChange: "+Key+" "+Value);
                             if (Key.equalsIgnoreCase("Active")) {
-                                if (Value.equalsIgnoreCase("False")) {
+                                if (Value.equalsIgnoreCase("") || (Value.equalsIgnoreCase("False")&&flag.equalsIgnoreCase("0"))) {
                                     //SourceScan
                                     myRef.child(UserId).child("Source").setValue("Kaushambi");
                                     myRef.child(UserId).child("Destination").setValue("");
+                                    myRef.child(UserId).child("OpenGate").setValue("True");
                                     myRef.child(UserId).child("Active").setValue("True");
-                                } else if (Value.equalsIgnoreCase("True")){
+                                }else if(Value.equalsIgnoreCase("True") && flag.equalsIgnoreCase("0")){
+                                    myRef.child(UserId).child("Flag").setValue("1");
+                                }
+                                else if (Value.equalsIgnoreCase("True") && flag.equalsIgnoreCase("1")){
                                     //DestinationScan
                                     myRef.child(UserId).child("Destination").setValue("Vaishali");
-                                    myRef.child(UserId).child("Active").setValue("False");
+                                    myRef.child(UserId).child("OpenGate").setValue("False");
                                     //add trip to Trips
-                                    myRef.child(UserId).child("Source").setValue("");
-                                    myRef.child(UserId).child("Destination").setValue("");
-                                    myRef.child(UserId).child("Active").setValue("");
-
+//                                    myRef.child(UserId).child("Source").setValue("");
+//                                    myRef.child(UserId).child("Destination").setValue("");
+//                                    myRef.child(UserId).child("OpenGate").setValue("");
+//
+                                    myRef.child(UserId).child("Active").setValue("False");
+                                }else{
+                                    myRef.child(UserId).child("Flag").setValue("0");
                                 }
                             }
                         }catch (Exception e){
                             Log.e(TAG, "onDataChange: "+e.getStackTrace() );
                         }
-                    }
+
                 }else{
                     //create New One first Scan
                     myRef.child(UserId).child("Source").setValue("Kaushambi");
-                    myRef.child(UserId).child("Active").setValue("True");
+                    myRef.child(UserId).child("OpenGate").setValue("True");
                 }
             }
 
