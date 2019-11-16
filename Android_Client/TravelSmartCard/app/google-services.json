@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "401477732941",
+    "firebase_url": "https://travelsmartcard-1019c.firebaseio.com",
+    "project_id": "travelsmartcard-1019c",
+    "storage_bucket": "travelsmartcard-1019c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401477732941:android:3d2c8a3c391abcc9d8aa04",
+        "android_client_info": {
+          "package_name": "com.example.travelsmartcard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401477732941-sc9vigp8ekt55aruir9kel48a28hsa9b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.travelsmartcard",
+            "certificate_hash": "32925572ff4f76ed3f0eaca70348c9d29e91334a"
+          }
+        },
+        {
+          "client_id": "401477732941-fgjrg8c3g5rqsk7v8ro3asfn0qjq1p7n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCePcl7oWmck6ECeRcLHqOKVzbnmYYExCE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401477732941-fgjrg8c3g5rqsk7v8ro3asfn0qjq1p7n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
