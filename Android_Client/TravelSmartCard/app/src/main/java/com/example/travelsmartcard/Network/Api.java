@@ -3,8 +3,12 @@ package com.example.travelsmartcard.Network;
 
 
 
+import org.json.JSONObject;
+
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 
@@ -16,5 +20,7 @@ public interface Api
 //                                         @Query("page") int page,
 //                                         @Query("per_page") int per_page);
 
+    @POST("/addNewUser")
+    Call<String> addNewUser(@Body JSONObject jsonObject);
 
 }

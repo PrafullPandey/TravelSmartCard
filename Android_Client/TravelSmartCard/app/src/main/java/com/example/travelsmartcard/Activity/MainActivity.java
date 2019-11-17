@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.travelsmartcard.Fragments.AdditionalUseCaseFragment;
 import com.example.travelsmartcard.Fragments.QR_Code_Scanner;
 import com.example.travelsmartcard.Fragments.TripListFragment;
 import com.example.travelsmartcard.R;
@@ -36,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new QR_Code_Scanner();
                     break;
                 case R.id.navigation_notifications:
-//                    mTextMessage.setText(R.string.title_notifications);
+                    fragment = new AdditionalUseCaseFragment();
                     break;
+
             }
             return loadFragment(fragment);
         }
